@@ -36,9 +36,27 @@ $(document).ready(function(){
           }
            return timeStr;
         }
-        $tweet.html('@' + user + ': ' + tweet.message + ' created at ' + time());
-        $tweet.appendTo('.tweetContainer');
+        var latestTweet = $tweet.html('@' + user + ': ' + tweet.message + ' created at ' + time());
+      // console.log('childNodes', $('.tweetContainer')[0].childNodes);
+      console.log(typeof $('.tweetContainer')[0].childNodes);
+      for (var key in $('.tweetContainer')[0].childNodes) {
+        console.log(key);
+        // if (key === 'innerText') {
+        // console.log(innerText);
+        // }
+      }
+
+        $('.tweetContainer')[0].childNodes.forEach(function(tweets){ 
+            //console.log(tweets);
+          for (var uniqueMessage in tweets) {
+          }
+          //if ($('.tweetContainer')[0].childNodes[0].innerText !== child.innerText) {
+            //console.log('this is the same tweet man');
+            latestTweet.appendTo('.tweetContainer');
+          //}
+        })
         index -= 1;
+        
       } 
     }
     else {
@@ -67,12 +85,17 @@ $(document).ready(function(){
            return timeStr;
         }
         $tweet.html('@' + user + ': ' + tweet.message + ' created at ' + time());
-        $tweet.appendTo('.tweetContainer');       
+        $tweet.appendTo('.tweetContainer');
+        // var $myContainer = $('.tweetContainer');
+        // $myContainer.html('');
+        
+
         index -= 1;
       }
       hasBeenClickedMoreThanOnce = true;
     }
     $('.userAnchor').click(function() {
+      $('.userTweets' ).remove();
       // for each user in streams.user..
       for (var person in streams.users) {
         // if the button we clicked on is equal to the current user..
@@ -80,7 +103,7 @@ $(document).ready(function(){
           // for each object in the array..
           streams.users[person].forEach(function(userMessage) {
             // append message property value to userSpecificTweetContainer 
-            $('<div>' + userMessage.message + ' created at ' + time() + '</div>').appendTo('.userSpecificTweetContainer');
+            $('<div class= "userTweets">' + userMessage.message + ' created at ' + time() + '</div>').appendTo('.userSpecificTweetContainer');
           });
         }
       }
