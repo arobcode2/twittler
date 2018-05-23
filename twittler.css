@@ -1,0 +1,23 @@
+body {
+  background-color: #A7DAF3;
+}
+.logo {
+  font-size: 80px;
+  color: blue;
+  margin: 5% 50%;
+}
+.showNewTweets {
+  width: 7%;
+  margin: 3% 53.5%;
+}
+.tweetContainer {
+  border: 5px solid blue;
+  width: 60%;
+  margin: 3% 500px;
+}
+
+.userSpecificTweetContainer {
+  border: 5px solid blue;
+  width: 60%;
+  margin: 3% 500px;
+}
