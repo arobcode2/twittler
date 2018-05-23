@@ -14,9 +14,8 @@ $(document).ready(function(){
     if (hasBeenClickedMoreThanOnce === true) {
       while(index >=previousLength) {
          tweet = streams.home[index];
-         user = '<a href=".userSpecificTweetContainer" class ="userAnchor">' + tweet.user + ' </a>';
+         user = '<button class="userAnchor">' + tweet.user + ' </button>';
          $tweet = $('<div></div>');
-         console.log($tweet);
          date = new Date();
          seconds = date.getUTCSeconds();
          minutes = date.getUTCMinutes();
@@ -45,7 +44,7 @@ $(document).ready(function(){
     else {
       while(index >=0) {
          tweet = streams.home[index]; 
-         user = '<a href=".userSpecificTweetContainer" class ="userAnchor">' + tweet.user + ' </a>';
+         user = '<button class="userAnchor">' + tweet.user + ' </button>';
          $tweet = $('<div></div>');
          date = new Date();
          seconds = date.getUTCSeconds();
@@ -73,12 +72,24 @@ $(document).ready(function(){
       }
       hasBeenClickedMoreThanOnce = true;
     }
-  });
-  $('.testBTN').click(function() {
-    // get a list of tweets on its own onClick function
-    alert('you are idk working or such');
-    //streams.user.appendTo('.userSpecificTweetContainer');
-    // append list of tweets to userSpecificTweetContainer
+    $('.userAnchor').click(function() {
+      // for each user in streams.user..
+      for (var person in streams.users) {
+        // if the button we clicked on is equal to the current user..
+        if ($(this)[0].innerText === person) {
+          // for each object in the array..
+          streams.users[person].forEach(function(userMessage) {
+            // append message property value to userSpecificTweetContainer 
+            $('<div>' + userMessage.message + ' created at ' + time() + '</div>').appendTo('.userSpecificTweetContainer');
+          });
+        }
+      }
+    });
   });
 });
+
+
+
+
+
 
