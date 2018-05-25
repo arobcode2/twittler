@@ -1,67 +1,69 @@
 $(document).ready(function(){
   var hasBeenClickedMoreThanOnce = false;
 
+  var Time = function() {
+    var time = {};
+    time.seconds = 0;
+    time.minutes = 0;
+    time.hour = 0;
+    time.convertHour = function() {
+      var convertedHour = hour;   
+      if (hour > 12) {
+        convertedHour -= 12;
+        return convertedHour;
+      }
+    };
+    time.concatenateDayOrNight = function() {
+      var timeStr = time.convertHour() + ':' + minutes + ':' + seconds;
+      if (hour >= 12) {
+         timeStr += " P.M.";
+      } else {
+         timeStr += " A.M.";
+      }
+       return timeStr;
+    };
+    return time;
+  };
 
+  var Tweet = function() {
+    var tweet = {};
+    tweet.tweet,
+    tweet.$tweet, 
+    tweet.date 
+    return tweet;
+  };
+
+  var now = Time();
+
+  var generateNewTweets = function() {
+
+  };
   $('.showNewTweets').click(function() {
-    var index = streams.home.length - 1;
+    var tweetObj = Tweet();
+    var i = streams.home.length - 1;
     var previousLength = streams.home.length - 1;
-    var tweet;
-    var $tweet
-    var date;
-    var seconds;
-    var minutes;
-    var hour;
+    //now.convertHour();
     if (hasBeenClickedMoreThanOnce === true) {
-      while(index >=previousLength) {
-         tweet = streams.home[index];
-         user = '<button class="userAnchor">' + tweet.user + ' </button>';
-         $tweet = $('<div></div>');
-         date = new Date();
+      while(i >=previousLength) {
+         tweetObj.tweet = streams.home[i];
+         user = '<button class="userAnchor">' + tweetObj.tweet.user + ' </button>';
+         tweetObj.$tweet = $('<div></div>');
+         tweetObj.date = new Date();
          seconds = date.getUTCSeconds();
          minutes = date.getUTCMinutes();
          hour = date.getHours();
-        var convertHour = function() {
-          var convertedHour = hour;   
-          if (hour > 12) {
-            convertedHour -= 12;
-            return convertedHour;
-          }
-        }
-        var time = function() {
-          var timeStr = convertHour() + ':' + minutes + ':' + seconds;
-          if (hour >= 12) {
-             timeStr += " P.M.";
-          } else {
-             timeStr += " A.M.";
-          }
-           return timeStr;
-        }
-        var latestTweet = $tweet.html('@' + user + ': ' + tweet.message + ' created at ' + time());
-      // console.log('childNodes', $('.tweetContainer')[0].childNodes);
-      console.log(typeof $('.tweetContainer')[0].childNodes);
-      for (var key in $('.tweetContainer')[0].childNodes) {
-        console.log(key);
-        // if (key === 'innerText') {
-        // console.log(innerText);
-        // }
-      }
-
+        var latestTweet = tweetObj.$tweet.html('@' + user + ': ' + tweetObj.tweet.message + ' created at ' + now.concatenateDayOrNight());
+        
         $('.tweetContainer')[0].childNodes.forEach(function(tweets){ 
-            //console.log(tweets);
-          for (var uniqueMessage in tweets) {
-          }
-          //if ($('.tweetContainer')[0].childNodes[0].innerText !== child.innerText) {
-            //console.log('this is the same tweet man');
             latestTweet.appendTo('.tweetContainer');
-          //}
-        })
-        index -= 1;
+        });
+        i -= 1;
         
       } 
     }
     else {
-      while(index >=0) {
-         tweet = streams.home[index]; 
+      while(i >=0) {
+         tweet = streams.home[i]; 
          user = '<button class="userAnchor">' + tweet.user + ' </button>';
          $tweet = $('<div></div>');
          date = new Date();
@@ -74,8 +76,8 @@ $(document).ready(function(){
             convertedHour -= 12;
             return convertedHour;
           }
-        }
-        var time = function() {
+        };
+        var concatenateDayOrNight = function() {
           var timeStr = convertHour() + ':' + minutes + ':' + seconds;
           if (hour >= 12) {
              timeStr += " P.M.";
@@ -83,14 +85,10 @@ $(document).ready(function(){
              timeStr += " A.M.";
           }
            return timeStr;
-        }
-        $tweet.html('@' + user + ': ' + tweet.message + ' created at ' + time());
+        };
+        $tweet.html('@' + user + ': ' + tweet.message + ' created at ' + concatenateDayOrNight());
         $tweet.appendTo('.tweetContainer');
-        // var $myContainer = $('.tweetContainer');
-        // $myContainer.html('');
-        
-
-        index -= 1;
+        i -= 1;
       }
       hasBeenClickedMoreThanOnce = true;
     }
@@ -103,7 +101,7 @@ $(document).ready(function(){
           // for each object in the array..
           streams.users[person].forEach(function(userMessage) {
             // append message property value to userSpecificTweetContainer 
-            $('<div class= "userTweets">' + userMessage.message + ' created at ' + time() + '</div>').appendTo('.userSpecificTweetContainer');
+            $('<div class= "userTweets">' + userMessage.message + ' created at ' + now.concatenateDayOrNight() + '</div>').appendTo('.userSpecificTweetContainer');
           });
         }
       }
